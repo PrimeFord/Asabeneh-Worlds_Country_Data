@@ -2284,6 +2284,7 @@ langs.sort((a, b) => {
 });
 let tenlang = langs.slice(0, 10);
 console.log(langs);
+let filter = [];
 
 //total language
 let totalLang = 0;
@@ -2310,8 +2311,8 @@ console.log(countries_data);
 let firstTen = countrySort.slice(0, 10);
 
 // for new object with the total
-let newArr = [{ name: "World", population: totalPopulation }];
-let length = [{ name: "World", population: totalPopulation }];
+let newArr = [{ name: "WORLD", population: totalPopulation }];
+let length = [{ name: "WORLD", population: totalPopulation }];
 
 for (const f of firstTen) {
   let newObj = { name: f.name, population: f.population };
@@ -2397,12 +2398,13 @@ search.addEventListener("input", () => {
         <img class="flag" src=${countries[i].flag} alt="" />
         <p class="tit">${countries[i].name}</p>
         <p>Capital: ${countries[i].capital}</p>
-        <p>Languages: ${countries[i].languages}</p>
+        <p>Languages: ${countries[i].languages.join(", ")}</p>
         <p>Population: ${countries[i].population}</p>
       </div>`;
       length.push(countries[i]);
+      filter.push(countries[i]);
     }
-    console.log(length);
+    // console.log(length);
 
     inc.textContent = `${
       length.length - 1
@@ -2495,33 +2497,34 @@ pop.addEventListener("click", () => {
   }
 });
 // language filter
-let langno = [];
-length.map((n) => {
-  for (const c of n.languages) {
-    const langExist = langno.find((d) => d.country === c);
-    const langIndex = langno.findIndex((d) => d.country === c);
-    if (langExist) {
-      langno.splice(langIndex, 1, { ...langExist, count: langExist.count + 1 });
-    } else {
-      langno.push({ country: c, count: 1 });
-    }
-  }
-});
+// let langn = [];
+// filter.map((n) => {
+//   for (const c of n.languages) {
+//     const langExist = langn.find((d) => d.country === c);
+//     const langIndex = langn.findIndex((d) => d.country === c);
+//     if (langExist) {
+//       langn.splice(langIndex, 1, { ...langExist, count: langExist.count + 1 });
+//     } else {
+//       langn.push({ country: c, count: 1 });
+//     }
+//   }
+// });
 
-langno.sort((a, b) => {
-  if (a.count > b.count) return -1;
-  if (a.count < b.count) return 1;
-  return 0;
-});
-console.log(langno);
+// langn.sort((a, b) => {
+//   if (a.count > b.count) return -1;
+//   if (a.count < b.count) return 1;
+//   return 0;
+// });
+// console.log(langn);
+// console.log(filter);
 // lang.addEventListener("click", LanguageView());
 lang.addEventListener("click", () => {
   py.textContent = "World Languages";
   names.textContent = "";
-  for (const n of langno) {
+  for (const n of tenlang) {
     const p = document.createElement("p");
     const p1 = document.createElement("p");
-    p1.textContent = n.name;
+    p1.textContent = n.country;
     p1.style.height = "auto";
     p1.style.display = "flex";
     p1.style.width = "15rem";
@@ -2532,7 +2535,7 @@ lang.addEventListener("click", () => {
     const ptab = document.createElement("p");
     const p2 = document.createElement("p");
     p2.style.height = "1.8rem";
-    p2.style.width = (n.lang / totalLang) * 100 + "%";
+    p2.style.width = (n.count / totalLang) * 100 + "%";
     p2.style.display = "flex";
     p2.style.background = "#f2a93b";
     p2.style.alignItems = "center";
@@ -2542,7 +2545,7 @@ lang.addEventListener("click", () => {
     ptab.style.width = "40%";
 
     const p3 = document.createElement("p");
-    p3.textContent = n.lang;
+    p3.textContent = n.count;
     p3.style.height = "1.8rem";
     p3.style.width = "10rem";
     p3.style.display = "flex";

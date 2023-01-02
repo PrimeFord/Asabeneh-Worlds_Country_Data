@@ -2311,13 +2311,14 @@ for (const f of firstTen) {
 const info = document.querySelector(".info");
 const pop = document.querySelector(".pop");
 const lang = document.querySelector(".lang");
-const p = document.querySelector(".p");
+const py = document.querySelector(".p");
 const main = document.querySelector(".main");
 const names = document.querySelector(".name");
 const charts = document.querySelector(".charts");
 const figures = document.querySelector(".figures");
 
 //the default view
+py.textContent = "10 Most populate countries in the world";
 for (const n of newArr) {
   const p = document.createElement("p");
   const p1 = document.createElement("p");
@@ -2360,6 +2361,8 @@ for (const n of newArr) {
 
 //event listeners
 pop.addEventListener("click", () => {
+  py.textContent = "";
+  py.textContent = "10 Most populated countries in the world";
   names.innerHTML = "";
   for (const n of newArr) {
     const p = document.createElement("p");
@@ -2404,6 +2407,8 @@ pop.addEventListener("click", () => {
 
 // lang.addEventListener("click", LanguageView());
 lang.addEventListener("click", () => {
+  py.textContent = "";
+  py.textContent = "10 Most spoken languages in the world";
   names.textContent = "";
   for (const n of tenlang) {
     const p = document.createElement("p");

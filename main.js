@@ -2323,6 +2323,9 @@ console.log(firstTen);
 //Selectors
 const inc = document.querySelector(".inc");
 const search = document.querySelector(".search");
+const nameBtn = document.querySelector(".country");
+const capBtn = document.querySelector(".capital");
+const popBtn = document.querySelector(".population");
 const cards = document.querySelector(".cards");
 const card = document.querySelector(".card");
 const flag = document.querySelector(".flag");
@@ -2451,6 +2454,33 @@ search.addEventListener("input", () => {
     p.style.justifyContent = "center";
     p.style.marginBottom = "0.2rem";
     names.appendChild(p);
+  }
+});
+
+nameBtn.addEventListener("click", () => {
+  if ((search.value.length = "")) {
+    let rev = countries.reverse();
+    for (const r of rev) {
+      cards.innerHTML = "";
+      cards.innerHTML += `<div class="card">
+      <img class="flag" src=${r.flag} alt="" />
+      <p class="tit">${r.name}</p>
+      <p>Capital: ${r.capital}</p>
+      <p>Languages: ${r.languages.join(", ")}</p>
+      <p>Population: ${r.population.toLocaleString()}</p>
+    </div>`;
+    }
+  }
+  cards.innerHTML = "";
+  let lengthR = filter.reverse();
+  for (const l of lengthR) {
+    cards.innerHTML += `<div class="card">
+        <img class="flag" src=${l.flag} alt="" />
+        <p class="tit">${l.name}</p>
+        <p>Capital: ${l.capital}</p>
+        <p>Languages: ${l.languages.join(", ")}</p>
+        <p>Population: ${l.population.toLocaleString()}</p>
+      </div>`;
   }
 });
 

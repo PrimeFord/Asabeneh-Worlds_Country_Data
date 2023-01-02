@@ -2289,7 +2289,10 @@ let totalLang = 0;
 for (const t of tenlang) {
   totalLang += t.count;
 }
-
+const countries = [];
+for (const c of countries_data) {
+  countries.push(c);
+}
 //sorting form largest to smallest
 let countrySort = countries_data.sort((a, b) => {
   if (a.population > b.population) return -1;
@@ -2308,6 +2311,12 @@ for (const f of firstTen) {
 }
 
 //Selectors
+const inc = document.querySelector(".inc");
+const search = document.querySelector(".search");
+const cards = document.querySelector(".cards");
+const card = document.querySelector(".card");
+const flag = document.querySelector(".flag");
+const tit = document.querySelector(".tit");
 const info = document.querySelector(".info");
 const pop = document.querySelector(".pop");
 const lang = document.querySelector(".lang");
@@ -2318,6 +2327,17 @@ const charts = document.querySelector(".charts");
 const figures = document.querySelector(".figures");
 
 //the default view
+for (const c of countries) {
+  cards.innerHTML += `<div class="card">
+  <img class="flag" src=${c.flag} alt="" />
+  <p class="tit">${c.name.toLocaleUpperCase()}</p>
+  <p>Capital: ${c.capital}</p>
+  <p>Languages: ${c.languages.join(", ")}</p>
+  <p>Population: ${c.population}</p>
+</div>`;
+}
+
+//
 py.textContent = "10 Most populate countries in the world";
 for (const n of newArr) {
   const p = document.createElement("p");
@@ -2328,7 +2348,6 @@ for (const n of newArr) {
   p1.style.width = "15rem";
   p1.style.alignItems = "center";
   p1.style.justifyContent = "start";
-  // p1.style.textAlign = "center";
   p.appendChild(p1);
 
   const ptab = document.createElement("p");
@@ -2360,6 +2379,24 @@ for (const n of newArr) {
 }
 
 //event listeners
+search.addEventListener("input", () => {
+  for (let i = 0; i <= countries.length; i++) {
+    let no = countries[i].includes(input.value);
+    if (no && input.value.length >= 1) {
+      cards.innerHTML = "";
+      cards.innerHTML += `<div class="card">
+        <img class="flag" src=${countries[i].flag} alt="" />
+        <p class="tit">${countries[i].name.toLocaleUpperCase()}</p>
+        <p>Capital: ${countries[i].capital}</p>
+        <p>Languages: ${countries[i].languages}</p>
+        <p>Population: ${countries[i].population}</p>
+      </div>`;
+    }
+
+    inc.textContent = `${length.length} Countries satisfied the search criterion `;
+  }
+});
+
 pop.addEventListener("click", () => {
   py.textContent = "";
   py.textContent = "10 Most populated countries in the world";

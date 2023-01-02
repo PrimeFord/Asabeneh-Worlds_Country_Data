@@ -2343,7 +2343,7 @@ for (const c of countries) {
   <p class="tit">${c.name}</p>
   <p>Capital: ${c.capital}</p>
   <p>Languages: ${c.languages.join(", ")}</p>
-  <p>Population: ${c.population}</p>
+  <p>Population: ${c.population.toLocaleString()}</p>
 </div>`;
 }
 
@@ -2373,7 +2373,7 @@ for (const n of newArr) {
   ptab.style.width = "40%";
 
   const p3 = document.createElement("p");
-  p3.textContent = n.population;
+  p3.textContent = n.population.toLocaleString();
   p3.style.height = "1.8rem";
   p3.style.width = "10rem";
   p3.style.display = "flex";
@@ -2399,7 +2399,7 @@ search.addEventListener("input", () => {
         <p class="tit">${countries[i].name}</p>
         <p>Capital: ${countries[i].capital}</p>
         <p>Languages: ${countries[i].languages.join(", ")}</p>
-        <p>Population: ${countries[i].population}</p>
+        <p>Population: ${countries[i].population.toLocaleString()}</p>
       </div>`;
       length.push(countries[i]);
       filter.push(countries[i]);

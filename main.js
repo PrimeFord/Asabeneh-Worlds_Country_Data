@@ -2283,32 +2283,41 @@ langs.sort((a, b) => {
   return 0;
 });
 let tenlang = langs.slice(0, 10);
+console.log(langs);
 
 //total language
 let totalLang = 0;
 for (const t of tenlang) {
   totalLang += t.count;
 }
+//
 const countries = [];
 for (const c of countries_data) {
+  c.name = c.name.toLocaleUpperCase();
   countries.push(c);
 }
+console.log(countries);
+
 //sorting form largest to smallest
 let countrySort = countries_data.sort((a, b) => {
   if (a.population > b.population) return -1;
   if (a.population < b.population) return 1;
   return 0;
 });
+console.log(countries_data);
 
 // showing the first 10
 let firstTen = countrySort.slice(0, 10);
 
 // for new object with the total
 let newArr = [{ name: "World", population: totalPopulation }];
+let length = [{ name: "World", population: totalPopulation }];
+
 for (const f of firstTen) {
   let newObj = { name: f.name, population: f.population };
   newArr.push(newObj);
 }
+console.log(firstTen);
 
 //Selectors
 const inc = document.querySelector(".inc");
@@ -2330,7 +2339,7 @@ const figures = document.querySelector(".figures");
 for (const c of countries) {
   cards.innerHTML += `<div class="card">
   <img class="flag" src=${c.flag} alt="" />
-  <p class="tit">${c.name.toLocaleUpperCase()}</p>
+  <p class="tit">${c.name}</p>
   <p>Capital: ${c.capital}</p>
   <p>Languages: ${c.languages.join(", ")}</p>
   <p>Population: ${c.population}</p>
@@ -2380,28 +2389,30 @@ for (const n of newArr) {
 
 //event listeners
 search.addEventListener("input", () => {
-  for (let i = 0; i <= countries.length; i++) {
-    let no = countries[i].includes(input.value);
-    if (no && input.value.length >= 1) {
-      cards.innerHTML = "";
+  cards.innerHTML = "";
+  for (let i = 0; i < countries.length; i++) {
+    let no = countries[i].name.includes(search.value.toLocaleUpperCase());
+    if (no && search.value.length >= 1) {
       cards.innerHTML += `<div class="card">
         <img class="flag" src=${countries[i].flag} alt="" />
-        <p class="tit">${countries[i].name.toLocaleUpperCase()}</p>
+        <p class="tit">${countries[i].name}</p>
         <p>Capital: ${countries[i].capital}</p>
         <p>Languages: ${countries[i].languages}</p>
         <p>Population: ${countries[i].population}</p>
       </div>`;
+      length.push(countries[i]);
     }
+    console.log(length);
 
-    inc.textContent = `${length.length} Countries satisfied the search criterion `;
+    inc.textContent = `${
+      length.length - 1
+    } Countries satisfied the search criterion `;
   }
-});
 
-pop.addEventListener("click", () => {
-  py.textContent = "";
-  py.textContent = "10 Most populated countries in the world";
-  names.innerHTML = "";
-  for (const n of newArr) {
+  // for population
+  py.textContent = "World Population";
+  names.textContent = "";
+  for (const n of length) {
     const p = document.createElement("p");
     const p1 = document.createElement("p");
     p1.textContent = n.name;
@@ -2410,7 +2421,6 @@ pop.addEventListener("click", () => {
     p1.style.width = "15rem";
     p1.style.alignItems = "center";
     p1.style.justifyContent = "start";
-    // p1.style.textAlign = "center";
     p.appendChild(p1);
 
     const ptab = document.createElement("p");
@@ -2442,27 +2452,24 @@ pop.addEventListener("click", () => {
   }
 });
 
-// lang.addEventListener("click", LanguageView());
-lang.addEventListener("click", () => {
-  py.textContent = "";
-  py.textContent = "10 Most spoken languages in the world";
+pop.addEventListener("click", () => {
+  py.textContent = "World Population";
   names.textContent = "";
-  for (const n of tenlang) {
+  for (const n of length) {
     const p = document.createElement("p");
     const p1 = document.createElement("p");
-    p1.textContent = n.country;
+    p1.textContent = n.name;
     p1.style.height = "auto";
     p1.style.display = "flex";
     p1.style.width = "15rem";
     p1.style.alignItems = "center";
     p1.style.justifyContent = "start";
-    // p1.style.textAlign = "center";
     p.appendChild(p1);
 
     const ptab = document.createElement("p");
     const p2 = document.createElement("p");
     p2.style.height = "1.8rem";
-    p2.style.width = (n.count / totalLang) * 100 + "%";
+    p2.style.width = (n.population / totalPopulation) * 100 + "%";
     p2.style.display = "flex";
     p2.style.background = "#f2a93b";
     p2.style.alignItems = "center";
@@ -2472,7 +2479,70 @@ lang.addEventListener("click", () => {
     ptab.style.width = "40%";
 
     const p3 = document.createElement("p");
-    p3.textContent = n.count;
+    p3.textContent = n.population;
+    p3.style.height = "1.8rem";
+    p3.style.width = "10rem";
+    p3.style.display = "flex";
+    p3.style.alignItems = "center";
+    // p3.style.marginLeft = "0.2rem";
+    p.appendChild(p3);
+    p.style.gap = "0.3rem";
+    p.style.width = "100vw";
+    p.style.display = "flex";
+    p.style.justifyContent = "center";
+    p.style.marginBottom = "0.2rem";
+    names.appendChild(p);
+  }
+});
+// language filter
+let langno = [];
+length.map((n) => {
+  for (const c of n.languages) {
+    const langExist = langno.find((d) => d.country === c);
+    const langIndex = langno.findIndex((d) => d.country === c);
+    if (langExist) {
+      langno.splice(langIndex, 1, { ...langExist, count: langExist.count + 1 });
+    } else {
+      langno.push({ country: c, count: 1 });
+    }
+  }
+});
+
+langno.sort((a, b) => {
+  if (a.count > b.count) return -1;
+  if (a.count < b.count) return 1;
+  return 0;
+});
+console.log(langno);
+// lang.addEventListener("click", LanguageView());
+lang.addEventListener("click", () => {
+  py.textContent = "World Languages";
+  names.textContent = "";
+  for (const n of langno) {
+    const p = document.createElement("p");
+    const p1 = document.createElement("p");
+    p1.textContent = n.name;
+    p1.style.height = "auto";
+    p1.style.display = "flex";
+    p1.style.width = "15rem";
+    p1.style.alignItems = "center";
+    p1.style.justifyContent = "start";
+    p.appendChild(p1);
+
+    const ptab = document.createElement("p");
+    const p2 = document.createElement("p");
+    p2.style.height = "1.8rem";
+    p2.style.width = (n.lang / totalLang) * 100 + "%";
+    p2.style.display = "flex";
+    p2.style.background = "#f2a93b";
+    p2.style.alignItems = "center";
+    //   p2.style.margin = "0 0.4rem";
+    ptab.appendChild(p2);
+    p.appendChild(ptab);
+    ptab.style.width = "40%";
+
+    const p3 = document.createElement("p");
+    p3.textContent = n.lang;
     p3.style.height = "1.8rem";
     p3.style.width = "10rem";
     p3.style.display = "flex";

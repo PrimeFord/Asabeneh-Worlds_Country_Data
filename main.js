@@ -2498,7 +2498,6 @@ capBtn.addEventListener("click", () => {
   let capit = [];
   for (let i = 0; i < countries.length; i++) {
     let nc = countries[i].capital.includes(search.value.toLocaleUpperCase());
-    // let reg=/\[AZaz]/
     if (nc && search.value.length >= 1) {
       cards.innerHTML += `<div class="card">
         <img class="flag" src=${countries[i].flag} alt="" />

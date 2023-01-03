@@ -71,6 +71,7 @@ body {
   height: 2rem;
   width: 2rem;
   scroll-behavior: smooth;
+  transition: all 1s linear;
 }
 .cards {
   width: 100%;

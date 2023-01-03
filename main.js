@@ -2402,12 +2402,7 @@ for (const n of newArr) {
 search.addEventListener("input", () => {
   cards.innerHTML = "";
   for (let i = 0; i < countries.length; i++) {
-    let no =
-      countries[i].name.includes(search.value.toLocaleUpperCase()) ||
-      countries[i].capital.includes(search.value.toLocaleUpperCase()) ||
-      countries[i].languages
-        .join(" ")
-        .includes(search.value.toLocaleUpperCase());
+    let no = countries[i].name.includes(search.value.toLocaleUpperCase());
     if (no && search.value.length >= 1) {
       cards.innerHTML += `<div class="card">
         <img class="flag" src=${countries[i].flag} alt="" />

@@ -141,6 +141,45 @@ body {
   width: 100%;
   color: #565657;
 }
+footer {
+  margin-top: 2rem;
+  background-color: #f0efef;
+  height: max-content;
+  width: 100%;
+  padding: 1rem 0;
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+}
+footer img {
+  height: 3rem;
+  width: 3rem;
+}
+.copy {
+  /* width: 100%; */
+}
+.social {
+  height: 2rem;
+  width: 2rem;
+}
+.upp {
+  margin-left: 10rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  background-color: #f2a93b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+a {
+  cursor: pointer;
+}
+.upp img {
+  height: 2rem;
+  width: 2rem;
+}
 /* .charts {
     height: max-content;
     width: 40%;

@@ -2297,7 +2297,6 @@ for (const c of countries_data) {
   c.name = c.name.toLocaleUpperCase();
   countries.push(c);
 }
-console.log(countries);
 
 //sorting form largest to smallest
 let countrySort = countries_data.sort((a, b) => {
@@ -2306,6 +2305,14 @@ let countrySort = countries_data.sort((a, b) => {
   return 0;
 });
 console.log(countries_data);
+
+//sorting capital Alphabetical order
+// let coCap = [];
+// for (const c of countries_data) {
+//   c.capital = c.capital.sort();
+//   coCap.push(c);
+// }
+// console.log(coCap);
 
 // showing the first 10
 let firstTen = countrySort.slice(0, 10);
@@ -2457,11 +2464,56 @@ search.addEventListener("input", () => {
   }
 });
 
+//for name arrangement
 nameBtn.addEventListener("click", () => {
-  if ((search.value.length = "")) {
-    let rev = countries.reverse();
+  cards.innerHTML = "";
+  let rev = countries.reverse();
+  for (const r of rev) {
+    cards.innerHTML += `<div class="card">
+      <img class="flag" src=${r.flag} alt="" />
+      <p class="tit">${r.name}</p>
+      <p>Capital: ${r.capital}</p>
+      <p>Languages: ${r.languages.join(", ")}</p>
+      <p>Population: ${r.population.toLocaleString()}</p>
+    </div>`;
+  }
+  if (search.value.length >= 1) {
+    cards.innerHTML = "";
+    let lengthR = filter.reverse();
+    for (const l of lengthR) {
+      cards.innerHTML += `<div class="card">
+        <img class="flag" src=${l.flag} alt="" />
+        <p class="tit">${l.name}</p>
+        <p>Capital: ${l.capital}</p>
+        <p>Languages: ${l.languages.join(", ")}</p>
+        <p>Population: ${l.population.toLocaleString()}</p>
+      </div>`;
+    }
+  }
+});
+
+//for capital arrangement
+capBtn.addEventListener("click", () => {
+  cards.innerHTML = "";
+  let capit = [];
+  for (let i = 0; i < countries.length; i++) {
+    let nc = countries[i].capital.includes(search.value.toLocaleUpperCase());
+    // let reg=/\[AZaz]/
+    if (nc && search.value.length >= 1) {
+      cards.innerHTML += `<div class="card">
+        <img class="flag" src=${countries[i].flag} alt="" />
+        <p class="tit">${countries[i].name}</p>
+        <p>Capital: ${countries[i].capital}</p>
+        <p>Languages: ${countries[i].languages.join(", ")}</p>
+        <p>Population: ${countries[i].population.toLocaleString()}</p>
+      </div>`;
+      capit.push(countries[i]);
+      // length.push(countries[i]);
+      // filter.push(countries[i]);
+    }
+    cards.innerHTML = "";
+    let rev = capit.reverse();
     for (const r of rev) {
-      cards.innerHTML = "";
       cards.innerHTML += `<div class="card">
       <img class="flag" src=${r.flag} alt="" />
       <p class="tit">${r.name}</p>
@@ -2471,16 +2523,39 @@ nameBtn.addEventListener("click", () => {
     </div>`;
     }
   }
+});
+
+//for population arrangement
+popBtn.addEventListener("click", () => {
   cards.innerHTML = "";
-  let lengthR = filter.reverse();
-  for (const l of lengthR) {
+  let re = countries_data.reverse();
+  for (const r of re) {
     cards.innerHTML += `<div class="card">
+      <img class="flag" src=${r.flag} alt="" />
+      <p class="tit">${r.name}</p>
+      <p>Capital: ${r.capital}</p>
+      <p>Languages: ${r.languages.join(", ")}</p>
+      <p>Population: ${r.population.toLocaleString()}</p>
+    </div>`;
+  }
+  if (search.value.length >= 1) {
+    let lengthFltr = filter.sort((a, b) => {
+      if (a.population > b.population) return 1;
+      if (a.population < b.population) return -1;
+      return 0;
+    });
+    console.log(lengthFltr);
+    cards.innerHTML = "";
+    let lengthRe = lengthFltr.reverse();
+    for (const l of lengthRe) {
+      cards.innerHTML += `<div class="card">
         <img class="flag" src=${l.flag} alt="" />
         <p class="tit">${l.name}</p>
         <p>Capital: ${l.capital}</p>
         <p>Languages: ${l.languages.join(", ")}</p>
         <p>Population: ${l.population.toLocaleString()}</p>
       </div>`;
+    }
   }
 });
 
